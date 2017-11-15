@@ -1,0 +1,17 @@
+version: '2'
+services:
+  mypostgres:
+          image: postgres:alpine
+    container_name: mypostgres
+    environment:
+      - POSTGRES_PASSWORD=postgres
+    volumes:
+      - /tmp/postgres-data:/var/lib/postgresql/data
+  tomcat:
+    build: nexworldpoc
+    image: nexworldpoc
+    container_name: tomcat
+    links:
+      - mypostgres:postgres
+    ports:
+      - "8080:8080"
